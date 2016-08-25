@@ -1,7 +1,12 @@
 require 'rake'
 require 'rspec/core/rake_task'
+require_relative 'lib/sunlight_legislators_importer'
 require_relative 'db/config'
 
+desc "opens up console"
+task "console" do
+  sh "irb -r ./db/config"
+end
 
 desc "create the database"
 task "db:create" do
@@ -11,6 +16,11 @@ end
 desc "drop the database"
 task "db:drop" do
   rm_f 'db/ar-sunlight-legislators.sqlite3'
+end
+
+desc "seeding data from csv"
+task "db:seed" do 
+  SunlightLegislatorsImporter.import('db/data/legislators.csv')
 end
 
 desc "migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)."
