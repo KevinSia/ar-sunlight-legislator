@@ -1,11 +1,14 @@
-require 'byebug'
 class Legislator < ActiveRecord::Base
+  # -scopes-
+  # allow one to do eg. Legislator.in_state
+  # instead of Legislator.where(state: state)
   scope :in_state, -> (state) { where(state: state) }
   scope :with_gender, -> (gender) { where(gender: gender) }
   scope :in_office, -> { where(in_office: true) }
 
+  # using raw sql
   def self.sorted_states
-    # self join?
+    # how to make it an ActiveRecord::Relation?
     nested = self.find_by_sql("
       SELECT state, title, COUNT(*) AS state_title_count,
       (SELECT COUNT(*) AS state_count FROM legislators y WHERE x.state = y.state GROUP BY state ORDER BY state_count DESC) AS state_count

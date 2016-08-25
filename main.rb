@@ -1,5 +1,6 @@
 require_relative 'db/config'
 
+# alias of class name
 Senator = Sen
 Representative = Rep
 
@@ -19,14 +20,12 @@ end
 
 puts "Gender"
 gender = "M"
-
 total_count = Legislator.where(gender: gender).count
 sen_count = Senator.with_gender(gender).count
 rep_count = Representative.with_gender(gender).count
 
 puts "Male Senators: #{sen_count} (#{(sen_count/total_count.to_f * 100).round(0)}%)"
 puts "Male Representative: #{rep_count} (#{(rep_count/total_count.to_f * 100).round(0)}%)"
-
 
 puts "List of states (not very nice method)"
 Legislator.sorted_states_string.each do |key, value|
