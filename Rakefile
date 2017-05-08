@@ -5,7 +5,7 @@ require_relative 'db/config'
 
 desc "opens up console"
 task "console" do
-  sh "irb -r ./db/config"
+  exec "irb -r ./db/config"
 end
 
 desc "create the database"
@@ -19,7 +19,7 @@ task "db:drop" do
 end
 
 desc "seeding data from csv"
-task "db:seed" do 
+task "db:seed" do
   SunlightLegislatorsImporter.import('db/data/legislators.csv')
 end
 

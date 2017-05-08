@@ -9,12 +9,12 @@ class Legislator < ActiveRecord::Base
   # using raw sql
   def self.sorted_states
     # how to make it an ActiveRecord::Relation?
-    nested = self.find_by_sql("
+    self.find_by_sql("
       SELECT state, title, COUNT(*) AS state_title_count,
       (SELECT COUNT(*) AS state_count FROM legislators y WHERE x.state = y.state GROUP BY state ORDER BY state_count DESC) AS state_count
       FROM legislators x
       WHERE in_office = 't'
-      GROUP BY state, title 
+      GROUP BY state, title
       ORDER BY title DESC, state_count DESC, state_title_count DESC;
     ")
   end
